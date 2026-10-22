@@ -1,0 +1,18 @@
+# Archivos temporales
+*.log
+*.tmp
+*.temp
+
+# Archivos de configuración privada
+.env
+.env.*
+
+# Archivos temporales de Excel
+~$*
+
+# Archivos del sistema
+Thumbs.db
+.DS_Store
+
+base_datos/*.zip*.bkp
+*.bkp

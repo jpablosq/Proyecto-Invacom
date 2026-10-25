@@ -14,5 +14,5 @@
 Thumbs.db
 .DS_Store
 
-base_datos/*.zip*.bkp
+base_datos/*.zip
 *.bkp

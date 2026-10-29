@@ -1285,7 +1285,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>${Internal.Entry.Current.Directory}/../base_datos/classicmodels_scalecars/products.csv</filename>
+    <filename>${Internal.Transformation.Filename.Directory}/../base_datos/staging/products_limpio.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>

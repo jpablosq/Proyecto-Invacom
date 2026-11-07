@@ -436,54 +436,28 @@
   <notepads>
   </notepads>
   <order>
-  <hop><from>LEER_PRODUCTS</from><to>CORREGIR_COMILLAS</to><enabled>Y</enabled></hop>
-  <hop><from>CORREGIR_COMILLAS</from><to>ESCRIBIR_STAGING</to><enabled>Y</enabled></hop>
+    <hop>
+      <from>LEER_PRODUCTS</from>
+      <to>CORREGIR_COMILLAS</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>CORREGIR_COMILLAS</from>
+      <to>ESCRIBIR_STAGING</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
-  <step>
-    <name>LEER_PRODUCTS</name>
-    <type>LoadFileInput</type>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-    <include>N</include>
-    <include_field/>
-    <rownum>N</rownum>
-    <addresultfile>N</addresultfile>
-    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
-    <IsIgnoreMissingPath>N</IsIgnoreMissingPath>
-    <rownum_field/>
-    <encoding>UTF-8</encoding>
-    <file>
-      <name>${Internal.Entry.Current.Directory}/../base_datos/classicmodels_scalecars/products.csv</name>
-      <filemask/>
-      <exclude_filemask/>
-      <file_required>Y</file_required>
-      <include_subfolders>N</include_subfolders>
-    </file>
-    <fields>
-      <field>
-        <name>contenido</name>
-        <element_type>content</element_type>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-    </fields>
-    <limit>0</limit>
-    <IsInFields>N</IsInFields>
-    <DynamicFilenameField/>
-    <GUI><xloc>100</xloc><yloc>100</yloc><draw>Y</draw></GUI>
-  </step>
   <step>
     <name>CORREGIR_COMILLAS</name>
     <type>ReplaceString</type>
+    <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
     <fields>
       <field>
         <in_stream_name>contenido</in_stream_name>
@@ -498,13 +472,31 @@
         <is_unicode>no</is_unicode>
       </field>
     </fields>
-    <GUI><xloc>300</xloc><yloc>100</yloc><draw>Y</draw></GUI>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>300</xloc>
+      <yloc>100</yloc>
+      <draw>Y</draw>
+    </GUI>
   </step>
   <step>
     <name>ESCRIBIR_STAGING</name>
     <type>TextFileOutput</type>
+    <description/>
     <distribute>Y</distribute>
+    <custom_distribution/>
     <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
     <separator/>
     <enclosure/>
     <enclosure_forced>N</enclosure_forced>
@@ -549,7 +541,84 @@
         <precision>-1</precision>
       </field>
     </fields>
-    <GUI><xloc>500</xloc><yloc>100</yloc><draw>Y</draw></GUI>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>96</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>LEER_PRODUCTS</name>
+    <type>LoadFileInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <include>N</include>
+    <include_field/>
+    <rownum>N</rownum>
+    <addresultfile>N</addresultfile>
+    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
+    <IsIgnoreMissingPath>N</IsIgnoreMissingPath>
+    <rownum_field/>
+    <encoding>UTF-8</encoding>
+    <file>
+      <name>${Internal.Entry.Current.Directory}/../base_datos/classicmodels_scalecars/products.csv</name>
+      <filemask/>
+      <exclude_filemask/>
+      <file_required>Y</file_required>
+      <include_subfolders>N</include_subfolders>
+    </file>
+    <fields>
+      <field>
+        <name>contenido</name>
+        <element_type>content</element_type>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+    </fields>
+    <limit>0</limit>
+    <IsInFields>N</IsInFields>
+    <DynamicFilenameField/>
+    <shortFileFieldName/>
+    <pathFieldName/>
+    <hiddenFieldName/>
+    <lastModificationTimeFieldName/>
+    <uriNameFieldName/>
+    <rootUriNameFieldName/>
+    <extensionFieldName/>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>100</xloc>
+      <yloc>100</yloc>
+      <draw>Y</draw>
+    </GUI>
   </step>
   <step_error_handling>
   </step_error_handling>

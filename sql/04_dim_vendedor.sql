@@ -21,15 +21,24 @@ INSERT INTO DIM_VENDEDOR (
     employeeNumber,
     firstName,
     lastName,
-    jobTitle
+    jobTitle,
+    email,
+    officeCode,
+    ciudad_oficina,
+    pais_oficina,
+    territorio_oficina
 )
 VALUES (
     0,
     0,
     'Sin vendedor',
     'asignado',
-    'Desconocido'
+    'Desconocido',
+    'No especificado',
+    '0',
+    'No especificado',
+    'No especificado',
+    'No especificado'
 );
 
 COMMIT;
-

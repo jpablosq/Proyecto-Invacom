@@ -539,7 +539,188 @@
       <to>CARGA_DIM_PRODUCTO</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>CSV_EMPLOYEES</from>
+      <to>LOOKUP_OFICINA</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>CSV_OFFICES</from>
+      <to>LOOKUP_OFICINA</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>LOOKUP_OFICINA</from>
+      <to>CORREGIR_PUESTO</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>CORREGIR_PUESTO</from>
+      <to>SELECT_VENDEDOR</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>SELECT_VENDEDOR</from>
+      <to>CARGA_DIM_VENDEDOR</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
+  <step>
+    <name>CARGA_DIM_CLIENTE</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>INVACOM_DW</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>INVACOM_DW</schema>
+      <table>DIM_CLIENTE</table>
+      <key>
+        <name>customerNumber</name>
+        <field>CUSTOMERNUMBER</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>CUSTOMERNUMBER</name>
+        <rename>customerNumber</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>CUSTOMERNAME</name>
+        <rename>customerName</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>CONTACTFIRSTNAME</name>
+        <rename>contactLastName</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>CONTACTLASTNAME</name>
+        <rename>contactFirstName</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>CITY</name>
+        <rename>city</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>STATE</name>
+        <rename>state</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>COUNTRY</name>
+        <rename>country</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>CREDITLIMIT</name>
+        <rename>creditLimit</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>800</xloc>
+      <yloc>96</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>CARGA_DIM_PRODUCTO</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>INVACOM_DW</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>INVACOM_DW</schema>
+      <table>DIM_PRODUCTO</table>
+      <key>
+        <name>productCode</name>
+        <field>PRODUCTCODE</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>PRODUCTCODE</name>
+        <rename>productCode</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>PRODUCTNAME</name>
+        <rename>productName</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>PRODUCTLINE</name>
+        <rename>productLine</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>PRODUCTSCALE</name>
+        <rename>productScale</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>PRODUCTVENDOR</name>
+        <rename>productVendor</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>DESCRIPCION_LINEA</name>
+        <rename>descripcion_linea</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>BUYPRICE</name>
+        <rename>buyPrice</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>MSRP</name>
+        <rename>MSRP</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>656</xloc>
+      <yloc>208</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
   <step>
     <name>CSV_CUSTOMERS</name>
     <type>CsvInput</type>
@@ -848,8 +1029,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>368</xloc>
-      <yloc>368</yloc>
+      <xloc>208</xloc>
+      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -988,8 +1169,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>416</xloc>
-      <yloc>480</yloc>
+      <xloc>208</xloc>
+      <yloc>528</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1084,8 +1265,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>208</xloc>
-      <yloc>448</yloc>
+      <xloc>96</xloc>
+      <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1202,8 +1383,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>592</xloc>
-      <yloc>480</yloc>
+      <xloc>96</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1287,8 +1468,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>576</xloc>
-      <yloc>368</yloc>
+      <xloc>1152</xloc>
+      <yloc>608</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1518,6 +1699,48 @@
     </GUI>
   </step>
   <step>
+    <name>LOOKUP_LINEA</name>
+    <type>StreamLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <from>CSV_PRODUCTLINES</from>
+    <input_sorted>N</input_sorted>
+    <preserve_memory>N</preserve_memory>
+    <sorted_list>N</sorted_list>
+    <integer_pair>Y</integer_pair>
+    <lookup>
+      <key>
+        <name>productLine</name>
+        <field>productLine</field>
+      </key>
+      <value>
+        <name>textDescription</name>
+        <rename>descripcion_linea</rename>
+        <default/>
+        <type>String</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>352</xloc>
+      <yloc>208</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>NULL_CLIENTES</name>
     <type>NullIf</type>
     <description/>
@@ -1613,6 +1836,58 @@
     </GUI>
   </step>
   <step>
+    <name>SELECT_PRODUCTO</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>productCode</name>
+      </field>
+      <field>
+        <name>productName</name>
+      </field>
+      <field>
+        <name>productLine</name>
+      </field>
+      <field>
+        <name>productScale</name>
+      </field>
+      <field>
+        <name>productVendor</name>
+      </field>
+      <field>
+        <name>descripcion_linea</name>
+      </field>
+      <field>
+        <name>buyPrice</name>
+      </field>
+      <field>
+        <name>MSRP</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>208</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>VALORES_CLIENTE</name>
     <type>IfNull</type>
     <description/>
@@ -1689,91 +1964,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>592</xloc>
+      <xloc>624</xloc>
       <yloc>96</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>CARGA_DIM_CLIENTE</name>
-    <type>InsertUpdate</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>INVACOM_DW</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>INVACOM_DW</schema>
-      <table>DIM_CLIENTE</table>
-      <key>
-        <name>customerNumber</name>
-        <field>CUSTOMERNUMBER</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>CUSTOMERNUMBER</name>
-        <rename>customerNumber</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>CUSTOMERNAME</name>
-        <rename>customerName</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>CONTACTFIRSTNAME</name>
-        <rename>contactLastName</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>CONTACTLASTNAME</name>
-        <rename>contactFirstName</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>CITY</name>
-        <rename>city</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>STATE</name>
-        <rename>state</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>COUNTRY</name>
-        <rename>country</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>CREDITLIMIT</name>
-        <rename>creditLimit</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>720</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>LOOKUP_LINEA</name>
+    <name>LOOKUP_OFICINA</name>
     <type>StreamLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -1783,19 +1980,31 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <from>CSV_PRODUCTLINES</from>
+    <from>CSV_OFFICES</from>
     <input_sorted>N</input_sorted>
-    <preserve_memory>N</preserve_memory>
+    <preserve_memory>Y</preserve_memory>
     <sorted_list>N</sorted_list>
-    <integer_pair>Y</integer_pair>
+    <integer_pair>N</integer_pair>
     <lookup>
       <key>
-        <name>productLine</name>
-        <field>productLine</field>
+        <name>officeCode</name>
+        <field>officeCode</field>
       </key>
       <value>
-        <name>textDescription</name>
-        <rename>descripcion_linea</rename>
+        <name>city</name>
+        <rename>ciudad_oficina</rename>
+        <default/>
+        <type>String</type>
+      </value>
+      <value>
+        <name>country</name>
+        <rename>pais_oficina</rename>
+        <default/>
+        <type>String</type>
+      </value>
+      <value>
+        <name>territory</name>
+        <rename>territorio_oficina</rename>
         <default/>
         <type>String</type>
       </value>
@@ -1809,13 +2018,52 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>352</xloc>
-      <yloc>208</yloc>
+      <xloc>320</xloc>
+      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>SELECT_PRODUCTO</name>
+    <name>CORREGIR_PUESTO</name>
+    <type>ReplaceString</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <in_stream_name>jobTitle</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>Sale Manager</replace_string>
+        <replace_by_string>Sales Manager</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>yes</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>448</xloc>
+      <yloc>432</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>SELECT_VENDEDOR</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -1827,38 +2075,59 @@
     </partitioning>
     <fields>
       <field>
-        <name>productCode</name>
+        <name>employeeNumber</name>
         <rename/>
       </field>
       <field>
-        <name>productName</name>
+        <name>firstName</name>
         <rename/>
       </field>
       <field>
-        <name>productLine</name>
+        <name>lastName</name>
         <rename/>
       </field>
       <field>
-        <name>productScale</name>
+        <name>jobTitle</name>
         <rename/>
       </field>
       <field>
-        <name>productVendor</name>
+        <name>email</name>
         <rename/>
       </field>
       <field>
-        <name>descripcion_linea</name>
+        <name>officeCode</name>
         <rename/>
       </field>
       <field>
-        <name>buyPrice</name>
+        <name>ciudad_oficina</name>
         <rename/>
       </field>
       <field>
-        <name>MSRP</name>
+        <name>pais_oficina</name>
+        <rename/>
+      </field>
+      <field>
+        <name>territorio_oficina</name>
         <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
+      <meta>
+        <name>officeCode</name>
+        <rename>officeCode</rename>
+        <type>String</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -1869,13 +2138,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>480</xloc>
-      <yloc>208</yloc>
+      <xloc>576</xloc>
+      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>CARGA_DIM_PRODUCTO</name>
+    <name>CARGA_DIM_VENDEDOR</name>
     <type>InsertUpdate</type>
     <description/>
     <distribute>Y</distribute>
@@ -1890,51 +2159,56 @@
     <update_bypassed>N</update_bypassed>
     <lookup>
       <schema>INVACOM_DW</schema>
-      <table>DIM_PRODUCTO</table>
+      <table>DIM_VENDEDOR</table>
       <key>
-        <name>productCode</name>
-        <field>PRODUCTCODE</field>
+        <name>employeeNumber</name>
+        <field>EMPLOYEENUMBER</field>
         <condition>=</condition>
         <name2/>
       </key>
       <value>
-        <name>PRODUCTCODE</name>
-        <rename>productCode</rename>
+        <name>EMPLOYEENUMBER</name>
+        <rename>employeeNumber</rename>
         <update>N</update>
       </value>
       <value>
-        <name>PRODUCTNAME</name>
-        <rename>productName</rename>
+        <name>FIRSTNAME</name>
+        <rename>firstName</rename>
         <update>Y</update>
       </value>
       <value>
-        <name>PRODUCTLINE</name>
-        <rename>productLine</rename>
+        <name>LASTNAME</name>
+        <rename>lastName</rename>
         <update>Y</update>
       </value>
       <value>
-        <name>PRODUCTSCALE</name>
-        <rename>productScale</rename>
+        <name>JOBTITLE</name>
+        <rename>jobTitle</rename>
         <update>Y</update>
       </value>
       <value>
-        <name>PRODUCTVENDOR</name>
-        <rename>productVendor</rename>
+        <name>EMAIL</name>
+        <rename>email</rename>
         <update>Y</update>
       </value>
       <value>
-        <name>DESCRIPCION_LINEA</name>
-        <rename>descripcion_linea</rename>
+        <name>OFFICECODE</name>
+        <rename>officeCode</rename>
         <update>Y</update>
       </value>
       <value>
-        <name>BUYPRICE</name>
-        <rename>buyPrice</rename>
+        <name>CIUDAD_OFICINA</name>
+        <rename>ciudad_oficina</rename>
         <update>Y</update>
       </value>
       <value>
-        <name>MSRP</name>
-        <rename>MSRP</rename>
+        <name>PAIS_OFICINA</name>
+        <rename>pais_oficina</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>TERRITORIO_OFICINA</name>
+        <rename>territorio_oficina</rename>
         <update>Y</update>
       </value>
     </lookup>
@@ -1947,8 +2221,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>608</xloc>
-      <yloc>208</yloc>
+      <xloc>704</xloc>
+      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

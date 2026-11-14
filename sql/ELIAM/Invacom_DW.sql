@@ -25,3 +25,19 @@ SELECT COUNT(*)                AS filas,
        SUM(margen)             AS total_margen,
        SUM(CASE WHEN estado_pedido = 'Cancelled' THEN 1 ELSE 0 END) AS lineas_canceladas
 FROM fact_ventas;
+
+
+SELECT COUNT(*)                     AS filas,
+       SUM(monto)                   AS total_monto,
+       COUNT(DISTINCT cliente_key)  AS clientes,
+       MIN(fecha_key)               AS primera_fecha,
+       MAX(fecha_key)               AS ultima_fecha
+FROM fact_pagos;
+
+
+SELECT 'DIM_CLIENTE'  AS tabla, COUNT(*) AS filas FROM dim_cliente  UNION ALL
+SELECT 'DIM_PRODUCTO',          COUNT(*)          FROM dim_producto UNION ALL
+SELECT 'DIM_FECHA',             COUNT(*)          FROM dim_fecha    UNION ALL
+SELECT 'DIM_VENDEDOR',          COUNT(*)          FROM dim_vendedor UNION ALL
+SELECT 'FACT_VENTAS',           COUNT(*)          FROM fact_ventas  UNION ALL
+SELECT 'FACT_PAGOS',            COUNT(*)          FROM fact_pagos;

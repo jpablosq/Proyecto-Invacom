@@ -135,6 +135,37 @@ LEFT JOIN pagos pa
 ORDER BY diferencia DESC;
 
 
+-- Control global de compras contra pagos
+-- Pregunta de negocio 13
+-- Excluye pedidos cancelados
+-- Resultado esperado: clientes_con_compras 98, total_compras 9365336.43,
+-- total_pagos 8853839.23, diferencia 511497.2
+WITH compras AS (
+    SELECT cliente_key,
+           SUM(importe_total) AS total_compras
+    FROM fact_ventas
+    WHERE estado_pedido <> 'Cancelled'
+    GROUP BY cliente_key
+),
+pagos AS (
+    SELECT cliente_key,
+           SUM(monto) AS total_pagos
+    FROM fact_pagos
+    GROUP BY cliente_key
+)
+SELECT
+    COUNT(co.cliente_key) AS clientes_con_compras,
+    COUNT(pa.cliente_key) AS clientes_con_pagos,
+    ROUND(SUM(NVL(co.total_compras, 0)), 2) AS total_compras,
+    ROUND(SUM(NVL(pa.total_pagos, 0)), 2) AS total_pagos,
+    ROUND(SUM(NVL(co.total_compras, 0) - NVL(pa.total_pagos, 0)), 2) AS diferencia
+FROM dim_cliente c
+LEFT JOIN compras co
+    ON c.cliente_key = co.cliente_key
+LEFT JOIN pagos pa
+    ON c.cliente_key = pa.cliente_key;
+
+
 -- Incluye todos los estados de pedidos
 SELECT
     d.vendedor_key,

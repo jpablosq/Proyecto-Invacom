@@ -1,22 +1,23 @@
-# Data Warehouse Invacom Inc. S. A.
+# Data Warehouse de Invacom Inc. S. A.
 
-Proyecto académico de **Minería de Datos – Universidad Técnica Nacional, Sede Regional San Carlos (2026)**.
+Proyecto 1 del curso Minería de Datos, Universidad Técnica Nacional, Sede Regional de San Carlos, 2026.
 
-**Integrantes:** Edgar Eliam Araya Alvarado y José Pablo Soto Quesada.
-**Herramientas:** Pentaho Data Integration 9.4 (Kettle), Oracle Database XE, SQL Developer, Microsoft Excel, Git y GitHub.
+Integrantes: Edgar Eliam Araya Alvarado y José Pablo Soto Quesada.
+
+Herramientas: Pentaho Data Integration 9.4 (Kettle), Oracle Database XE, SQL Developer, Microsoft Excel, Git y GitHub.
 
 ## Objetivo
 
-Implementar un Data Warehouse que integre los datos transaccionales de Classic Models, permita analizar ventas y pagos y ofrezca reportes con tablas dinámicas conectadas a Oracle.
+Construir un Data Warehouse con los datos de ventas de la base Classic Models, cargado con procesos ETL de Pentaho, para analizar las ventas y los pagos de Invacom con tablas dinámicas de Excel conectadas a Oracle.
 
 ## Modelo dimensional
 
-Se utiliza una **constelación de hechos**:
+Se utiliza un modelo de constelación de hechos (Kimball y Ross, 2013):
 
-- **DIM_CLIENTE**, **DIM_PRODUCTO**, **DIM_FECHA**, **DIM_VENDEDOR**.
-- **FACT_VENTAS:** una fila por línea de pedido; medidas de cantidad, importe, costo y margen.
-- **FACT_PAGOS:** una fila por pago; medida de importe.
-- Dimensiones compartidas por ambas tablas de hechos: cliente y fecha.
+- Dimensiones: DIM_CLIENTE, DIM_PRODUCTO, DIM_FECHA y DIM_VENDEDOR.
+- FACT_VENTAS: una fila por cada línea de pedido, con cantidad, importe, costo y margen.
+- FACT_PAGOS: una fila por cada pago, con su monto.
+- Cliente y fecha son dimensiones compartidas por las dos tablas de hechos.
 
 ### Conteos verificados
 
@@ -25,59 +26,80 @@ Se utiliza una **constelación de hechos**:
 | DIM_CLIENTE | 122 |
 | DIM_PRODUCTO | 110 |
 | DIM_FECHA | 1.096 |
-| DIM_VENDEDOR | 24 (incluye desconocido) |
+| DIM_VENDEDOR | 24 (23 empleados y el registro desconocido con clave 0) |
 | FACT_VENTAS | 2.996 |
 | FACT_PAGOS | 273 |
 
-Las cifras corresponden a la carga validada durante el proyecto; volver a ejecutar las consultas si se modifican los datos.
+Si se cambian los datos de origen, hay que volver a ejecutar las consultas de validación.
 
-## Estructura principal
+## Carpetas
 
 ```text
-base_datos/          CSV fuente y archivo de staging de productos
-etl/                 Transformaciones Kettle (.ktr) y Job (.kjb)
-sql/                 Creación de dimensiones/hechos y consultas de validación
-documentacion/       Informe académico y modelo dimensional
-excel/               Libro de reportes conectados a Oracle
+base_datos/          Archivos CSV de origen y products_limpio.csv (staging)
+etl/                 Transformaciones de Pentaho (.ktr) y Job de carga (.kjb)
+sql/                 Creación de dimensiones y hechos, y consultas de validación
+documentacion/       Documento del proyecto y diagrama del modelo dimensional
+excel/               Libro de reportes conectado a Oracle
 evidencias/          Capturas de ejecución, validación y reportes
 ```
 
-## Ejecución
+## Cómo ejecutar el proyecto
 
-1. Instalar Oracle XE y crear el esquema `INVACOM_DW` en el servicio `XEPDB1`.
-2. Ejecutar en orden los scripts `sql/01_dim_cliente.sql` hasta `sql/06_fact_pagos.sql` con una conexión apropiada al esquema (verificar antes de ejecutar en una base con datos).
-3. Instalar Pentaho Data Integration y un driver JDBC compatible con Oracle.
-4. En Pentaho, configurar `INVACOM_DW` con URL `jdbc:oracle:thin:@//localhost:1521/XEPDB1`, controlador `oracle.jdbc.OracleDriver` y usuario `INVACOM_DW`.
-5. Guardar la contraseña únicamente en la configuración privada de Kettle (`kettle.properties`) como `INVACOM_DW_PASSWORD`. **Nunca publicar contraseñas ni incluirlas en archivos versionados.**
-6. Abrir `etl/Carga_Invacom.kjb` en Spoon y ejecutar el Job completo.
-7. Ejecutar `sql/07_validacion.sql` en SQL Developer y contrastar los resultados con las evidencias.
-8. Abrir `excel/Invacom_Reportes.xlsx`, actualizar la conexión a Oracle y comprobar los reportes.
+1. Instalar Oracle XE y crear el usuario `INVACOM_DW` en el servicio `XEPDB1` con `sql/ELIAM/Invacom_Admin.sql`, cambiando `TU_CONTRASEÑA` por una contraseña propia.
+2. Con el usuario `INVACOM_DW`, ejecutar en orden los archivos `sql/01_dim_cliente.sql` a `sql/06_fact_pagos.sql`.
+3. Instalar Pentaho Data Integration 9.4 y copiar el driver `ojdbc11.jar` en la carpeta `data-integration/lib`.
+4. Agregar al archivo `kettle.properties` de la computadora (en la carpeta `.kettle` del usuario) la línea `INVACOM_DW_PASSWORD=` con la contraseña de Oracle. Las transformaciones leen la contraseña de esa variable, por lo que no se guarda en el repositorio. No se deben subir contraseñas a GitHub.
+5. Abrir `etl/Carga_Invacom.kjb` en Spoon y ejecutar el Job. La conexión `INVACOM_DW` usa la URL `jdbc:oracle:thin:@//localhost:1521/XEPDB1`.
+6. Ejecutar `sql/07_validacion.sql` en SQL Developer y comparar los resultados con las capturas de `evidencias/`.
+7. Abrir `excel/Invacom_Reportes.xlsx`, actualizar los datos y revisar los reportes.
 
-> El libro de Excel está preparado para conectarse al Oracle XE local. En otro equipo es necesario instalar un cliente Oracle compatible con la arquitectura de Excel y configurar las credenciales del usuario localmente.
+El libro de Excel se conecta al Oracle XE local con Power Query. En otra computadora hay que instalar un cliente de Oracle compatible con la versión de Excel (32 o 64 bits) e ingresar el usuario y la contraseña de Oracle al actualizar.
 
 ## Validación
 
-- `FACT_VENTAS`: **2.996 líneas**, importe **USD 9.604.190,61**, margen bruto estimado **USD 3.825.880,25**.
-- `FACT_PAGOS`: **273 pagos**, monto **USD 8.853.839,23**.
-- Pedidos cancelados: **6 pedidos**, **79 líneas**; se mantienen en el DW y pueden excluirse en los reportes por el estado del pedido.
-- Validaciones de relaciones, ventas por año, estado del pedido, línea de producto, pagos por año y vendedor: `sql/07_validacion.sql`.
+- FACT_VENTAS tiene 2.996 líneas, con un importe de USD 9.604.190,61 y un margen bruto estimado de USD 3.825.880,25.
+- FACT_PAGOS tiene 273 pagos, que suman USD 8.853.839,23.
+- Los 6 pedidos cancelados (79 líneas) se conservan en el DW con su estado. Sin ellos, las ventas suman USD 9.365.336,43 y el margen USD 3.731.511,97.
+- Entre las compras sin cancelados y los pagos hay una diferencia de USD 511.497,20. Hay 98 clientes con compras y 98 con pagos.
+- Las consultas de integridad, ventas por año, pedidos por estado, margen por línea de producto, pagos por año, compras contra pagos y ventas por vendedor están en `sql/07_validacion.sql`.
 
 ## Reportes de Excel
 
-1. Ventas anuales.
-2. Ventas por categoría de producto.
-3. Top 10 de vendedores.
-4. Pagos anuales.
-5. Ventas versus pagos por año.
-6. Margen por categoría.
-7. Pedidos por estado.
+| Hoja | Reporte | Pedidos cancelados |
+|---|---|---|
+| 01_Ventas_Anuales | Ventas por año | Excluidos |
+| 02_Ventas_Categorias | Ventas por línea de producto | Excluidos |
+| 03_Ventas_Vendedores | 10 vendedores con más ventas, con filtro por territorio | Excluidos |
+| 04_Pagos_Anuales | Pagos recibidos por año | No aplica |
+| 05_Ventas_vs_Pagos | Ventas y pagos por año | Excluidos de las ventas |
+| 06_Margen_Categorias | Ventas y margen bruto por línea de producto | Excluidos |
+| 07_Pedidos_Estado | Pedidos e importe por estado | Incluidos |
 
-## Equipo y evidencias de colaboración
+Los reportes que excluyen los cancelados tienen el filtro "Estado del pedido" sobre la tabla dinámica. Se puede cambiar para incluirlos.
 
-El historial de commits y los archivos en `evidencias/` documentan etapas del trabajo. **Antes de la entrega**, agregar aquí el enlace del tablero Kanban real, el calendario de sprints y la referencia a capturas de las ceremonias/seguimiento que efectivamente se realizaron. No declarar reuniones o sprints que no tengan respaldo.
+## Trabajo en equipo
 
-## Notas de interpretación
+El trabajo se organizó en cuatro iteraciones de una semana. José Pablo Soto Quesada fue el Scrum Master. Los avances y las revisiones semanales se coordinaron por WhatsApp. No se utilizó un tablero Kanban, por lo que el reparto de tareas quedó en los mensajes del grupo y en los commits.
 
-- Los importes son expresados en USD conforme a la definición del ejercicio.
-- El margen calculado es una estimación bruta, no utilidad neta.
-- Ventas y pagos corresponden a eventos diferentes y no deben unirse directamente a nivel de fila, para evitar multiplicación de registros.
+| Iteración | Fechas (2026) | Actividades | Commits |
+|---|---|---|---|
+| 1 | 21 al 25 de octubre | Repositorio, archivos CSV y primer modelo dimensional | 2 |
+| 2 | 26 de octubre al 1 de noviembre | Fuentes y calidad de datos, limpieza de productos en Pentaho, modelo con pagos y tablas en Oracle | 6 |
+| 3 | 2 al 8 de noviembre | Carga de dimensiones y hechos, Job de carga completa y validación de integridad, ventas y márgenes | 5 |
+| 4 | 9 al 13 de noviembre | Validaciones de pagos y vendedores, reportes de Excel, documentación y README | 3 |
+
+En total se realizaron 16 commits, 8 de cada integrante.
+
+## Notas
+
+- Los montos están en dólares estadounidenses, como indicó el profesor del curso.
+- El margen es una estimación bruta (precio de venta menos costo de compra) y no incluye otros gastos.
+- Las ventas y los pagos son eventos distintos. No se deben unir fila por fila, porque las filas se multiplican. Se suman por separado y después se comparan por cliente o por fecha.
+
+## Referencias
+
+- Kimball, R. y Caserta, J. (2004). The data warehouse ETL toolkit: Practical techniques for extracting, cleaning, conforming, and delivering data. Wiley.
+- Kimball, R. y Ross, M. (2013). The data warehouse toolkit: The definitive guide to dimensional modeling (3.ª ed.). Wiley.
+- Universidad Técnica Nacional. (2026). Proyecto #1 Minería de datos 3C2026 [Enunciado del proyecto]. Sede Regional de San Carlos.
+
+Las demás fuentes, incluidos los videos de Pentaho, están en la bibliografía de `documentacion/Proyecto1_Invacom.docx`.

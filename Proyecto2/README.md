@@ -23,7 +23,8 @@ Archivo de análisis: `Proyecto2/Dashboard_Invacom.pbix`
 8. [Verificación de requisitos](#8-verificación-de-requisitos)
 9. [Consideraciones y limitaciones](#9-consideraciones-y-limitaciones)
 10. [Conclusión](#10-conclusión)
-11. [Referencias](#referencias)
+11. [Gestión del trabajo en Jira](#gestión-del-trabajo-en-jira)
+12. [Referencias](#referencias)
 
 En este documento se describen la metodología usada para definir los KPI, el desglose S.M.A.R.T. de cada uno, el modelo de datos, las medidas DAX, los resultados de 2004 y las páginas del tablero de Power BI.
 
@@ -264,6 +265,12 @@ La página tiene un mapa de ventas por país del cliente, un árbol de descompos
 Se concluye que el tablero permite revisar en un solo archivo los cuatro KPI de Invacom. En 2004 se cumplieron las metas de crecimiento de ventas (33,7 %), margen bruto (40,0 %) y cobranza (99,3 %), y no se cumplió la de cancelación, que llegó a 3,8 %. Los gráficos por país, territorio y vendedor ayudan a buscar el origen de cada resultado.
 
 Se recomienda revisar los pedidos cancelados de 2004 por cliente y por vendedor, ya que esa tasa casi duplicó la meta.
+
+## Gestión del trabajo en Jira
+
+Las tareas del proyecto 2 se organizaron en un tablero de Jira, con un responsable en cada tarea. Enlace al tablero:
+
+https://invacom2.atlassian.net/?continue=https%3A%2F%2Finvacom2.atlassian.net%2Fwelcome%2Fsoftware%3FprojectId%3D10000&atlOrigin=eyJpIjoiZGFmZTdjOTAyZmJmNDZiMmIwNDIxMjE3YjYyNGJmMTkiLCJwIjoiamlyYS1zb2Z0d2FyZSJ9
 
 ## Referencias
 

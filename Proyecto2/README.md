@@ -180,7 +180,7 @@ RETURN IF(MIN(DIM_FECHA[FECHA_KEY]) > UltimaVenta, BLANK(), DIVIDE(COALESCE(Canc
 
 ### 4.5 Metas e interpretación
 
-En 2004 las ventas crecieron 33,7 % contra 2003, y la meta de 15 % se cumplió en 9 de los 12 meses. En diciembre de 2004, que es el mes que muestra el visual KPI de la página Ventas y margen, el crecimiento fue de 55,0 %. El margen bruto de 2004 fue de 40,04 %, por lo que cumple la meta de 40 %, y se cumplió en 7 de los 12 meses. La cobranza acumulada de 2004 llegó a 99,3 %, mayor que la meta de 95 %. La cancelación acumulada de 2004 fue de 3,8 %, mayor que el máximo de 2 %. El valor más alto se dio en junio, con 10,9 % acumulado desde enero.
+En 2004 las ventas crecieron 33,7 % contra 2003, y la meta de 15 % se cumplió en 9 de los 12 meses. En diciembre de 2004, que es el mes que muestra el visual KPI de la página Ventas y margen, el crecimiento fue de 55,0 %. El margen bruto de 2004 fue de 40,04 %, por lo que cumple la meta de 40 %, y se cumplió en 7 de los 12 meses. En diciembre el margen fue de 39,0 %, que es el valor que muestra el visual KPI 2, por lo que ese mes quedó 1,0 punto bajo la meta. La cobranza acumulada de 2004 llegó a 99,3 %, mayor que la meta de 95 %. La cancelación acumulada de 2004 fue de 3,8 %, mayor que el máximo de 2 %. El valor más alto se dio en junio, con 10,9 % acumulado desde enero.
 
 ## 5. Resultados de 2004
 
@@ -189,7 +189,7 @@ Los valores siguientes son los que muestra el tablero con el año 2004 seleccion
 | Indicador o total | Valor | Interpretación |
 | --- | --- | --- |
 | Crecimiento de ventas | 33,7 % en el año; 55,0 % en diciembre | Cumple la meta de 15 % |
-| Margen bruto | 40,0 % (40,04 %) | Cumple la meta de 40 % |
+| Margen bruto | 40,0 % (40,04 %) en el año; 39,0 % en diciembre | El año cumple la meta de 40 %; diciembre no |
 | Cobranza acumulada | 99,3 % | Cumple la meta de 95 % |
 | Cancelación acumulada | 3,8 % | No cumple el máximo de 2 % |
 | Ventas totales | $4.344.182,02 | Sin pedidos cancelados |
@@ -216,23 +216,25 @@ Las capturas siguientes se tomaron en Power BI Desktop con el año 2004 seleccio
 
 ![Página Resumen, año 2004](capturas/01_resumen.png)
 
-La página muestra los cuatro KPI y los totales del año. En el KPI 4 la barra pasa la marca de la meta de 2 %.
+La página muestra los cuatro KPI con el año completo y los totales del año. En los medidores la zona roja va hasta la meta (15 % en el KPI 1 y 40 % en el KPI 2) y la verde desde la meta hasta 100 %; las agujas marcan 33.7 % y 40.0 %. En el KPI 3 la barra llega a 99,3 % y pasa la marca de 95 %. En el KPI 4 la barra llega a 3,8 % y pasa la marca de 2 %, por lo que esa meta no se cumplió.
 
 ### 7.2 Ventas y margen
 
 ![Página Ventas y margen, año 2004](capturas/02_ventas_margen.png)
 
+Los visuales KPI muestran diciembre de 2004: crecimiento de 55,0 % (meta de 15 %) y margen de 39,0 % (meta de 40 %). En el gráfico de margen por línea de producto solo Motorcycles (42,2 %) y Vintage Cars (40,9 %) pasan la meta, y la tabla de la derecha marca con flechas verdes y rojas la variación de cada mes contra el anterior.
+
 ### 7.3 Cobranza y cancelación
 
 ![Página Cobranza y cancelación, año 2004](capturas/03_cobranza_cancelacion.png)
 
-La tabla muestra por mes los pedidos cancelados, el importe cancelado y la tasa acumulada. De enero a abril de 2004 no hubo cancelaciones, por lo que la tasa es 0 % en esos meses.
+La tabla muestra por mes los pedidos cancelados, el importe cancelado y la tasa acumulada. De enero a abril de 2004 no hubo cancelaciones, por lo que la tasa es 0 % en esos meses. En mayo se canceló 1 pedido por $41.445,21 y en junio 3 pedidos por $130.278,28; desde ahí la tasa acumulada baja hasta 3,8 % en diciembre. En el gráfico de barras, la cobranza solo superó la meta de 95 % en septiembre y diciembre.
 
 ### 7.4 Análisis comercial
 
 ![Página Análisis comercial, año 2004](capturas/04_analisis_comercial.png)
 
-La página tiene un mapa de ventas por país del cliente, un árbol de descomposición por territorio, vendedor y línea de producto, un gráfico de ventas por territorio y el Top 5 de vendedores. En 2004 el vendedor con más ventas fue Gerard Hernandez, con $487.510,31.
+La página tiene un mapa de ventas por país del cliente, un árbol de descomposición por territorio, vendedor y línea de producto, un gráfico de ventas por territorio y el Top 5 de vendedores. En 2004 el vendedor con más ventas fue Gerard Hernandez, con $487.510,31. El árbol usa el nombre completo del vendedor, por lo que Leslie Jennings y Leslie Thompson aparecen por separado.
 
 ## 8. Verificación de requisitos
 
